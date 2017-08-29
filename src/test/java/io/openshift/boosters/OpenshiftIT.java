@@ -57,12 +57,12 @@ public class OpenshiftIT {
     @BeforeClass
     public static void setup() throws Exception {
         // Deploy the database and wait until it's ready.
-        openshift.deploy("database", new File("src/test/resources/templates/database.yml"));
+        /*openshift.deploy("database", new File("src/test/resources/templates/database.yml"));
         openshift.awaitPodReadinessOrFail(
                 pod -> "my-database".equals(pod.getMetadata().getLabels().get("app"))
         );
 
-        System.out.println("Database ready");
+        System.out.println("Database ready");*/
 
         // the application itself
         openshift.deployApplication();
@@ -84,7 +84,9 @@ public class OpenshiftIT {
 
     @AfterClass
     public static void teardown() throws Exception {
-        openshift.cleanup();
+        //openshift.cleanup();
+
+        System.out.println("Use 'mvn -Popenshift fabric8:undeploy' to remove the deployment");
     }
 
     @Before

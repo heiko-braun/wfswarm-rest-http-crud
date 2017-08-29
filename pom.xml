@@ -40,25 +40,6 @@
     <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>bom</artifactId>
-        <version>${version.wildfly.swarm}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>bom-certified</artifactId>
-        <version>${version.wildfly.swarm}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.wildfly.swarm</groupId>
@@ -144,6 +125,26 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>bom</artifactId>
+            <version>${version.wildfly.swarm}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+          <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>bom-certified</artifactId>
+            <version>${version.wildfly.swarm}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+
       <dependencies>
         <dependency>
           <groupId>com.h2database</groupId>
@@ -155,6 +156,29 @@
 
     <profile>
       <id>openshift</id>
+
+      <dependencyManagement>
+        <dependencies>
+
+          <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>bom</artifactId>
+            <version>${version.wildfly.swarm}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+
+          <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>bom-certified</artifactId>
+            <version>${version.wildfly.swarm}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+
+        </dependencies>
+      </dependencyManagement>
+
       <build>
         <plugins>
           <plugin>
@@ -206,8 +230,57 @@
 
     <profile>
       <id>openshift-it</id>
+
+      <dependencyManagement>
+        <dependencies>
+
+          <dependency>
+            <groupId>com.fasterxml.jackson</groupId>
+            <artifactId>jackson-bom</artifactId>
+            <version>2.7.8</version>
+            <scope>import</scope>
+            <type>pom</type>
+          </dependency>
+
+          <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>bom</artifactId>
+            <version>${version.wildfly.swarm}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+
+          <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>bom-certified</artifactId>
+            <version>${version.wildfly.swarm}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+
+        </dependencies>
+      </dependencyManagement>
+
+
       <build>
         <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>true</skipTests>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>wildfly-swarm-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
@@ -249,5 +322,5 @@
       <url>https://maven.repository.redhat.com/ga/</url>
     </pluginRepository>
   </pluginRepositories>
-  
+
 </project>
